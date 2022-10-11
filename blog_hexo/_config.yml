@@ -4,16 +4,16 @@
 
 # Site
 title: 缪克立
-subtitle: ''
-description: ''
+subtitle: '劳逸结合'
+description: '苦尽甘来，该有的总会有的。'
 keywords:
-author: John Doe
-language: en
+author: Keli Miao
+language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://miaokeliq.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -105,3 +105,21 @@ deploy:
   type: git
   repo: git@github.com:miaokeliq/miaokeliq.github.io.git         
   branch: main
+
+
+
+algolia:
+  appId: "8OBGYTAHTZ"
+  apiKey: "35c2ec32d8c274e643a0446e847e68fc"
+  adminApiKey: "35c14e5a73c130bc33c9c78943c433e0"
+  chunkSize: 5000
+  indexName: "immkl"
+  fields:
+    - content:strip:truncate,0,500
+    - excerpt:strip
+    - gallery
+    - permalink
+    - photos
+    - slug
+    - tags
+    - title

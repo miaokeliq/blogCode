@@ -1,0 +1,14 @@
+- class_name: 友情链接
+  class_desc: B站大学
+  link_list:
+    - name: B站
+      link: https://bilibili.com/
+      avatar: https://bu.dusays.com/2022/01/14/cd5ffd485f867.jpg
+      descr: B站大学
+- class_name: 网站
+  class_desc: 值得推荐的网站
+  link_list:
+    - name: Twitter
+      link: https://twitter.com/
+      avatar: https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png
+      descr: 社交分享平台
