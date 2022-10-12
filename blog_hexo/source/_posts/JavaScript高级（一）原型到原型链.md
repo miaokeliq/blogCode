@@ -1,5 +1,5 @@
 ---
-title: JavaScript高级(一):原型到原型链
+title: JavaScript高级(一) 原型到原型链
 date: 2022-10-11 20:50:53
 categories: 
 - 前端
@@ -210,7 +210,7 @@ console.log(Object.prototype.__proto__) // null
 
 最后一张关系图也可以更新为：![QQ截图20221011225041](./JavaScript高级（一）原型到原型链/QQ截图20221011225041.png)
 
-最后，图中由相互关联的原型组成的链状结构就是**<font color=red>原型链</font>**，也就是<font color=blue>蓝色</font>的这条线。
+最后，图中由相互关联的原型组成的链状结构就是<font color=red>**原型链**</font>，也就是<font color=blue>蓝色</font>的这条线。
 
 
 
