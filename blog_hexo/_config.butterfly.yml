@@ -204,7 +204,7 @@ error_img:
 # A simple 404 page
 error_404:
   enable: true
-  subtitle: 'Page Not Found'
+  subtitle: "Page Not Found"
   background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 post_meta:
@@ -618,7 +618,7 @@ canvas_fluttering_ribbon:
 # https://github.com/hustcc/canvas-nest.js
 canvas_nest:
   enable: false
-  color: '0,0,255' #color of lines, default: '0,0,0'; RGB values: (R,G,B).(note: use ',' to separate.)
+  color: "0,0,255" #color of lines, default: '0,0,0'; RGB values: (R,G,B).(note: use ',' to separate.)
   opacity: 0.7 # the opacity of line (0~1), default: 0.5.
   zIndex: -1 # z-index property of the background, default: -1.
   count: 99 # the number of lines, default: 99.
@@ -663,7 +663,7 @@ beautify:
   enable: false
   field: post # site/post
   title-prefix-icon: '\f0c1'
-  title-prefix-icon-color: '#F47466'
+  title-prefix-icon-color: "#F47466"
 
 # Global font settings
 # Don't modify the following settings unless you know how they work (非必要不要修改)
@@ -701,7 +701,7 @@ subtitle:
   # subtitle 會先顯示 source , 再顯示 sub 的內容
   source: false
   sub:
-    - 苦尽甘来，该有的总会有的。
+    - 愿所有的汗水都有收获，愿所有的努力不被辜负。
 
 preloader: true
 
@@ -801,9 +801,9 @@ translate:
   # Time delay
   translateDelay: 0
   # The text of the button when the language is Simplified Chinese
-  msgToTraditionalChinese: '繁'
+  msgToTraditionalChinese: "繁"
   # The text of the button when the language is Traditional Chinese
-  msgToSimplifiedChinese: '簡'
+  msgToSimplifiedChinese: "簡"
 
 # Read Mode (閲讀模式)
 readmode: true
@@ -879,8 +879,8 @@ aplayerInject:
 snackbar:
   enable: false
   position: bottom-left
-  bg_light: '#49b1f5' # The background color of Toast Notification in light mode
-  bg_dark: '#121212' # The background color of Toast Notification in dark mode
+  bg_light: "#49b1f5" # The background color of Toast Notification in light mode
+  bg_dark: "#121212" # The background color of Toast Notification in dark mode
 
 # https://instant.page/
 # prefetch (預加載)
@@ -1021,9 +1021,6 @@ CDN:
   prismjs_lineNumber_js: https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js
   prismjs_autoloader: https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js
 
-
-
-
 wowjs:
   enable: true #控制动画开关。true是打开，false是关闭
   animateitem:
@@ -1036,12 +1033,10 @@ wowjs:
     - class: card-widget
       style: animate__zoomIn
 
-
-
 ghbdage:
   enable: false
   bdageitem:
-    - link: https://hexo.io/  # 标签跳转链接
+    - link: https://hexo.io/ # 标签跳转链接
       shields: https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo #shields的API链接，填法参考本篇教程
       message: 博客框架为Hexo_v5.3.0 #鼠标悬停时显示的信息
     - link: https://demo.jerryc.me/
@@ -1062,4 +1057,3 @@ ghbdage:
     - link: http://creativecommons.org/licenses/by-nc-sa/4.0/
       shields: https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris
       message: 本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可
-
