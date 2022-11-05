@@ -166,3 +166,19 @@ categories:
 > [1.两数之和](https://leetcode.cn/problems/two-sum/)
 
 - 2022/11/04 使用Map 来解决
+
+
+
+### 383.赎金信
+
+> [383.赎金信](https://leetcode.cn/problems/ransom-note/)
+
+- 2022/11/05 使用数组当哈希表来解决
+
+
+
+### 454.四数相加2⃣️
+
+> [454.四数相加2⃣️](https://leetcode.cn/problems/4sum-ii/)
+
+- 2022/11/05  使用map当哈希表来解决
