@@ -131,71 +131,24 @@ cover:
   position: both
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
   default_cover:
-    - /img/post_img/1.jpg
-    - /img/post_img/2.jpg
-    - /img/post_img/3.jpg
-    - /img/post_img/4.jpg
-    - /img/post_img/5.jpg
-    - /img/post_img/6.jpg
-    - /img/post_img/7.jpg
-    - /img/post_img/8.jpg
-    - /img/post_img/9.jpg
-    - /img/post_img/10.jpg
     - /img/post_img/11.jpg
-    - /img/post_img/12.jpg
-    - /img/post_img/13.jpg
-    - /img/post_img/14.jpg
-    - /img/post_img/15.jpg
-    - /img/post_img/16.jpg
-    - /img/post_img/17.jpg
-    - /img/post_img/18.jpg
-    - /img/post_img/19.jpg
-    - /img/post_img/20.jpg
     - /img/post_img/21.jpg
-    - /img/post_img/22.jpg
-    - /img/post_img/23.jpg
-    - /img/post_img/24.jpg
-    - /img/post_img/25.jpg
-    - /img/post_img/26.jpg
-    - /img/post_img/27.jpg
-    - /img/post_img/28.jpg
-    - /img/post_img/29.jpg
-    - /img/post_img/30.jpg
     - /img/post_img/31.jpg
-    - /img/post_img/32.jpg
-    - /img/post_img/33.jpg
-    - /img/post_img/34.jpg
-    - /img/post_img/35.jpg
-    - /img/post_img/36.jpg
-    - /img/post_img/37.jpg
-    - /img/post_img/38.jpg
-    - /img/post_img/39.jpg
-    - /img/post_img/40.jpg
     - /img/post_img/41.jpg
-    - /img/post_img/42.jpg
-    - /img/post_img/43.jpg
-    - /img/post_img/44.jpg
-    - /img/post_img/45.jpg
-    - /img/post_img/46.jpg
-    - /img/post_img/47.jpg
-    - /img/post_img/48.jpg
-    - /img/post_img/49.jpg
-    - /img/post_img/50.jpg
     - /img/post_img/51.jpg
-    - /img/post_img/52.jpg
-    - /img/post_img/53.jpg
-    - /img/post_img/54.jpg
-    - /img/post_img/55.jpg
-    - /img/post_img/56.jpg
-    - /img/post_img/57.jpg
-    - /img/post_img/58.jpg
-    - /img/post_img/59.jpg
-    - /img/post_img/60.jpg
     - /img/post_img/61.jpg
-    - /img/post_img/62.jpg
-    - /img/post_img/63.jpg
-    - /img/post_img/64.jpg
-
+    - /img/post_img/71.jpg
+    - /img/post_img/81.jpg
+    - /img/post_img/91.jpg
+    - /img/post_img/101.jpg
+    - /img/post_img/111.jpg
+    - /img/post_img/121.jpg
+    - /img/post_img/131.jpg
+    - /img/post_img/141.jpg
+    - /img/post_img/151.jpg
+    - /img/post_img/161.jpg
+    - /img/post_img/171.jpg
+    - /img/post_img/181.jpg
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
   flink: /img/friend_404.gif

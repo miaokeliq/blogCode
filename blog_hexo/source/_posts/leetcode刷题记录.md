@@ -156,3 +156,39 @@ categories:
 > [剑指 offer05.替换空格](https://leetcode.cn/problems/ti-huan-kong-ge-lcof/description/)
 
 - 2022/11/12 使用双指针解决
+
+### 151.反转字符串中的单词
+
+> [151.反转字符串中的单词](https://leetcode.cn/problems/reverse-words-in-a-string/)
+
+- 2022/11/18 使用双指针解决
+
+### 剑指 offer 58 - 2⃣️。.左旋转字符串
+
+> [剑指 offer 58 - 2⃣️。.左旋转字符串](https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/description/)
+
+- 2022/11/19 反复旋转字符串，然后使用双指针实现旋转`reverse()`方法解决
+
+### 28.找出字符串中第一个匹配项的下标
+
+> [28.找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+
+- 2022/11/20 kmp 算法
+
+### 459. 重复的子字符串
+
+> [459. 重复的子字符串](https://leetcode.cn/problems/repeated-substring-pattern/description/)
+
+- 2022/11/20 kmp 算法
+
+### 232. 用栈实现队列
+
+> [232. 用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks/description/)
+
+- 2022/11/20 用栈实现队列（栈就相当于用数组来实现）
+
+### 225. 用队列实现栈
+
+> [225. 用队列实现栈](https://leetcode.cn/problems/implement-stack-using-queues/description/)
+
+- 2022/11/20 用队列实现栈（用数组的`push()` 和 `shift()`库函数实现）
