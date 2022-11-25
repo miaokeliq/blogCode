@@ -192,3 +192,15 @@ categories:
 > [225. 用队列实现栈](https://leetcode.cn/problems/implement-stack-using-queues/description/)
 
 - 2022/11/20 用队列实现栈（用数组的`push()` 和 `shift()`库函数实现）
+
+### 20. 有效的括号
+
+> [20. 有效的括号](https://leetcode.cn/problems/valid-parentheses/description/)
+
+- 2022/11/24 用栈模拟过程实现
+
+### 1047. 删除字符串中的所有相邻重复项
+
+> [1047.删除字符串中的所有相邻重复项](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/description/)
+
+- 2022/11/24 用栈模拟实现过程，跟第 20 题类似的思路
