@@ -204,3 +204,27 @@ categories:
 > [1047.删除字符串中的所有相邻重复项](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/description/)
 
 - 2022/11/24 用栈模拟实现过程，跟第 20 题类似的思路
+
+### 239. 滑动窗口最大值
+
+> [239.滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)
+
+- 2022/12/14 单调队列的应用
+
+### 144. 二叉树的前序遍历
+
+> [144.二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
+
+- 2022/12/15 迭代法实现深度优先遍历
+
+### 145. 二叉树的后序遍历
+
+> [145.二叉树的后序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
+
+- 2022/12/15 迭代法实现深度优先遍历
+
+### 94. 二叉树的中序遍历
+
+> [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
+
+- 2022/12/15 迭代法实现深度优先遍历
