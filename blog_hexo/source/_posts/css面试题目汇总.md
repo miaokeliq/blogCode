@@ -108,4 +108,62 @@ categories:
 - `display:none`是非继承属性，子孙节点会随着父节点从渲染树消失，通过修改子孙节点的属性也无法显示；
 - `visibility:hidden`是继承属性，子孙节点消失是由于继承了`hidden`，通过设置`visibility:visible`可以让子孙节点显示；（3）修改常规文档流中元素的`display`通常会造成文档的重排，但是修改`visibility`属性只会造成本元素的重绘；
 
-（4）如果使用读屏器，设置为`display:none`的内容不会被读取，设置为`visibility:hidden`的内容会被读取。
+（4）如果使用读屏器*（屏幕阅读器是“读取文档”（在您的情况下是网页）并以视觉障碍（例如失明）的人可以轻松消费的方式输出的软件）*，设置为`display:none`的内容不会被读取，设置为`visibility:hidden`的内容会被读取。
+
+### 对盒模型的理解
+
+![iShot_2023-02-05_10.39.26](./css面试题目汇总/iShot_2023-02-05_10.39.26.png)
+
+![iShot_2023-02-05_10.41.38](./css面试题目汇总/iShot_2023-02-05_10.41.38.png)
+
+盒模型都是由四个部分组成的，分别是`margin`、`border`、`padding`、`content`。
+
+标准盒模型和IE盒模型的区别在于设置`width`和`height`时，所对应的范围不同：
+
+- 标准盒模型的`width`和`height`属性的范围只包含了`content`，
+- IE盒模型的`width`和`height`属性的范围包含了`border`、`padding`、`content`。
+
+可以通过修改元素的`box-sizing`属性来改变元素的盒模型：
+
+- `box-sizing:content-box`表示标准盒模型（<font color="red">默认值</font>）
+- `box-sizing:border-box`表示IE盒模型（怪异盒模型）
+
+### CSS3中有哪些新特性
+
+- 新增各种选择器：（:not(.input):所有class不是"input" 的节点）
+- 圆角（`border-radius:8px`）
+- 所列布局(`multi-column layout`)
+- 阴影（`text-shadow和box-shadow`）和反射（`box-reflect`）
+- 文字特效（`text-shadow`）
+- 文字渲染（`text-decoration`）
+- 线性渐变（`gradient`）
+- 旋转（`transform`）
+- 增加了旋转，缩放，定位，倾斜，动画，多背景
+
+### 单行、多行文本溢出隐藏
+
+- 单行文本溢出
+
+``````css
+overflow: hidden;  					//溢出隐藏
+text-overflow: ellipsis;			//溢出用省略号表示
+white-space: nowrap;					//规定段落中的文本不进行换行
+``````
+
+- 多行文本溢出
+
+``````css
+overflow: hidden;						//溢出隐藏
+text-overflow: ellipsis;			//溢出用省略号表示
+display: -webkit-box;					//作为弹性伸缩盒子模型显示
+-webkit-box-orient: vertical; //设置伸缩盒子的字元素排列方式：从上到下垂直排列
+-webkit-line-clamp:3;					//设置的行数
+``````
+
+webkit-line-clamp用来限制在一个块元素显示的文本的行数。 为了实现该效果，它需要组合其他的WebKit属性。常见结合属性：
+display: -webkit-box; 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 。
+-webkit-box-orient 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 。
+text-overflow: ellipsis;，可以用来多行文本的情况下，用省略号“…”隐藏超出范围的文本。
+注意：由于上面的三个属性都是CSS3的属性，没有浏览器可以兼容，所以要在前面加一个`-webkit-`来兼容一部分浏览器。
+
+> [单行、多行文本溢出详解博客](https://blog.csdn.net/weixin_52834435/article/details/122515850)
