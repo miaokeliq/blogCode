@@ -216,15 +216,42 @@ categories:
 > [144.二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
 
 - 2022/12/15 迭代法实现深度优先遍历
+- 2022/02/06 递归法实现
 
 ### 145. 二叉树的后序遍历
 
 > [145.二叉树的后序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
 
 - 2022/12/15 迭代法实现深度优先遍历
+- 2022/02/06 递归法实现
 
 ### 94. 二叉树的中序遍历
 
 > [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
 - 2022/12/15 迭代法实现深度优先遍历
+- 2022/02/06 递归法实现
+
+### 429.N叉树的层序遍历
+
+> [N叉树的层序遍历](https://leetcode.cn/problems/n-ary-tree-level-order-traversal/)
+
+- 2022/02/06 初学层序遍历算法
+
+### 637.二叉树的层平均值
+
+> [二叉树的层平均值](https://leetcode.cn/problems/average-of-levels-in-binary-tree/)
+
+- 2022/02/06 在层序遍历的基础上稍作修改
+
+### 199.二叉树的右视图
+
+> [二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/)
+
+- 2022/02/06 在层序遍历的基础上稍作修改
+
+### 107.二叉树的层次遍历2⃣️
+
+> [二叉树的层次遍历2⃣️](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/)
+
+- 2022/02/06 在层序遍历的基础上稍作修改
