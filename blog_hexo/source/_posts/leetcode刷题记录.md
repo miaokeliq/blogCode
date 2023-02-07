@@ -255,3 +255,21 @@ categories:
 > [二叉树的层次遍历2⃣️](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/)
 
 - 2022/02/06 在层序遍历的基础上稍作修改
+
+### 226.翻转二叉树
+
+> [翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
+
+- 2022/02/07 递归法 前序后序遍历
+
+### 101. 对称二叉树
+
+> [对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
+
+- 2022/02/07 递归法 后序遍历
+
+### 104.二叉树的最大深度
+
+> [二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
+
+- 2022/02/07 递归法 后序遍历
