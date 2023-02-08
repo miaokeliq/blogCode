@@ -4,6 +4,7 @@ date: 2023-01-14 21:59:32
 tags: [前端,闲聊分享,CSS]
 categories: 
   - 经验分享
+  - 前端
 ---
 
 # 前言
@@ -300,4 +301,137 @@ text-overflow: ellipsis;，可以用来多行文本的情况下，用省略号�
   }
   ``````
 
+
+# 三栏布局的实现
+
+三栏布局一般指的是页面中一共有三栏，**左右两栏宽度固定，中间自适应的布局**，三栏布局的具体实现：
+
+- 利用**绝对定位**，左右两栏设置为绝对定位，中间设置对应方向大小的margin的值。
+
+  ``````css
+  .outer {
+    position: relative;
+    height: 100px;
+  }
   
+  .left {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: tomato;
+  }
+  
+  .right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100px;
+    background: gold;
+  }
+  
+  .center {
+    margin-left: 100px;
+    margin-right: 200px;
+    height: 100px;
+    background: lightgreen;
+  }
+  ``````
+
+- 利用flex布局，左右两栏设置固定大小，中间一栏设置为`flex:1`。
+
+  ``````css
+  .outer {
+    display: flex;
+    height: 100px;
+  }
+  
+  .left {
+    width: 100px;
+    background: tomato;
+  }
+  
+  .right {
+    width: 100px;
+    background: gold;
+  }
+  
+  .center {
+    flex: 1;
+    background: lightgreen;
+  }
+  ``````
+
+- 利用浮动，左右两栏设置固定大小，并设置对应方向的浮动。中间一栏设置左右两个方向的margin值，***注意这种方式，中间一栏必须放到最后***？
+
+  ``````css
+  .outer {
+    height: 100px;
+  }
+  
+  .left {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background: tomato;
+  }
+  
+  .right {
+    float: right;
+    width: 200px;
+    height: 100px;
+    background: gold;
+  }
+  
+  .center {
+    height: 100px;
+    margin-left: 100px;
+    margin-right: 200px;
+    background: lightgreen;
+  }
+  ``````
+
+- 圣杯布局，利用浮动和负边距来实现。父级元素设置左右的`padding`，三列均设置向左浮动，中间一列放在最前面，宽度设置为父级元素的宽度，因此后面两列都被挤到了下一行，通过设置 margin 负值将其移动到上一行，再利用相对定位，定位到两边。
+
+  ``````css
+  .outer {
+    height: 100px;
+    padding-left: 100px;
+    padding-right: 200px;
+  }
+  
+  .left {
+    position: relative;
+    left: -100px;
+    float: left;
+    margin-left: -100%;
+    width: 100px;
+    height: 100px;
+    background: tomato;
+  }
+  
+  .right {
+    position: relative;
+    left: 200px;
+    float: right;
+    margin-left: -200px;
+    width: 200px;
+    height: 100px;
+    background: gold;
+  }
+  
+  .center {
+    float: left;
+    width: 100%;    /* 要设置其自适应，所以要100% */
+    height: 100px;
+    background: lightgreen;
+  }
+  
+  <div>
+  	<div class="middle"><h4>中间弹性区</h4></div>
+  <div class="left"><h4>左边栏</h4></div>
+  <div class="right"><h4>右边栏</h4></div>
+  </div>
+  ``````
+
+  圣杯局部的重点是***中间盒子要被优先渲染！！！，所以中间盒子要放在最前面***
