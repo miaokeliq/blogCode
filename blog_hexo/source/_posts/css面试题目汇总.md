@@ -435,3 +435,72 @@ text-overflow: ellipsis;，可以用来多行文本的情况下，用省略号�
   ``````
 
   圣杯局部的重点是***中间盒子要被优先渲染！！！，所以中间盒子要放在最前面***
+
+> [圣杯布局和双飞翼布局详解](http://mespace.fun/2023/02/08/CSS%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E4%B9%8B%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80%E4%B8%8E%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80/)
+
+# 水平垂直居中的实现
+
+- 利用绝对定位，先将元素的左上角通过top:50%和left:50%定位到页面的中心，然后再通过translate来调整元素的中心点到页面的中心。该方法需要**考虑浏览器兼容问题。**
+
+```css
+.parent {  
+  position: relative;
+} 
+.child {    
+  position: absolute;    
+  left: 50%;    
+  top: 50%;    
+  transform: translate(-50%,-50%);} /* 元素的2d转换。 ， translate是移动*/
+```
+
+- 利用绝对定位，设置四个方向的值都为0，并将margin设置为auto，由于宽高固定，因此对应方向实现平分，可以实现水平和垂直方向上的居中。该方法适用于**盒子有宽高**的情况：
+
+  ``````css
+  .parent {
+      position: relative;
+  }
+   
+  .child {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+  }
+  ``````
+
+- 利用绝对定位，先将元素的左上角通过top:50%和left:50%定位到页面的中心，然后再通过margin负值来调整元素的中心点到页面的中心。该方法适用于**盒子宽高已知**的情况
+
+  ``````css
+  .parent {
+      position: relative;
+  }
+   
+  .child {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -50px;     /* 自身 height 的一半 */
+      margin-left: -50px;    /* 自身 width 的一半 */
+  }
+  ``````
+
+- 利用flex布局，通过`align-items:center`和`justify-content:center`设置容器的垂直和水平方向上为居中对齐，然后它的子元素也可以实现垂直和水平的居中。该方法要**考虑兼容的问题**，该方法在移动端用的较多：
+
+  ``````css
+  .parent {
+      display: flex;
+      justify-content:center;
+      align-items:center;
+  }
+  ``````
+
+# 对Flex布局的理解及其使用场景
+
+**简单来说：** flex布局是CSS3新增的一种布局方式，可以通过将一个元素的display属性值设置为flex从而使它成为一个flex容器，它的所有子元素都会成为它的项目。一个容器默认有两条轴：一个是水平的主轴，一个是与主轴垂直的交叉轴。可以使用flex-direction来指定主轴的方向。可以使用justify-content来指定元素在主轴上的排列方式，使用align-items来指定元素在交叉轴上的排列方式。还可以使用flex-wrap来规定当一行排列不下时的换行方式。对于容器中的项目，可以使用order属性来指定项目的排列顺序，还可以使用flex-grow来指定当排列空间有剩余的时候，项目的放大比例，还可以使用flex-shrink来指定当排列空间不足时，项目的缩小比例。
+
+> [flex布局的基本概念](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+
+# 为什么要清除浮动？清除浮动的方式
+
