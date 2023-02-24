@@ -232,9 +232,9 @@ categories:
 - 2022/12/15 迭代法实现深度优先遍历
 - 2022/02/06 递归法实现
 
-### 429.N叉树的层序遍历
+### 429.N 叉树的层序遍历
 
-> [N叉树的层序遍历](https://leetcode.cn/problems/n-ary-tree-level-order-traversal/)
+> [N 叉树的层序遍历](https://leetcode.cn/problems/n-ary-tree-level-order-traversal/)
 
 - 2022/02/06 初学层序遍历算法
 
@@ -250,9 +250,9 @@ categories:
 
 - 2022/02/06 在层序遍历的基础上稍作修改
 
-### 107.二叉树的层次遍历2⃣️
+### 107.二叉树的层次遍历 2⃣️
 
-> [二叉树的层次遍历2⃣️](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/)
+> [二叉树的层次遍历 2⃣️](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/)
 
 - 2022/02/06 在层序遍历的基础上稍作修改
 
@@ -273,3 +273,15 @@ categories:
 > [二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
 
 - 2022/02/07 递归法 后序遍历
+
+### 111.二叉树的最小深度
+
+> [二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
+
+- 2023/02/20 后序遍历 递归法
+
+### 222.完全二叉树的节点个数
+
+> [完全二叉树的节点个数](https://leetcode.cn/problems/count-complete-tree-nodes/)
+
+- 2023/02/20 后序遍历 递归法 想要考虑完全二叉树的特性
