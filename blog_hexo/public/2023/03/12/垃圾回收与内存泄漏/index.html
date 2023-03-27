@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>垃圾回收与内存泄漏 | 缪克立的博客</title><meta name="keywords" content="前端,闲聊分享,JavaScript"><meta name="author" content="缪克立"><meta name="copyright" content="缪克立"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="垃圾回收内存生命周期 分配内存：当我们申请变量、函数、对象的时候，系统会自动为它们分配内存。 内存使用：即读写内存，也就是使用变量、函数等。 内存回收：使用完毕，由垃圾回收机制自动回收不再使用的内存。  概念GC是Garbage Collection，程序过程中会产生很多垃圾，这些垃圾是程序不再使用的内存或者一些不可达的对象，而GC就是负责回收垃圾的，找到内存中的垃圾、并释放和回收空间。 在浏览器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾回收与内存泄漏">
+<meta property="og:url" content="http://miaokeliq.github.io/2023/03/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/index.html">
+<meta property="og:site_name" content="缪克立的博客">
+<meta property="og:description" content="垃圾回收内存生命周期 分配内存：当我们申请变量、函数、对象的时候，系统会自动为它们分配内存。 内存使用：即读写内存，也就是使用变量、函数等。 内存回收：使用完毕，由垃圾回收机制自动回收不再使用的内存。  概念GC是Garbage Collection，程序过程中会产生很多垃圾，这些垃圾是程序不再使用的内存或者一些不可达的对象，而GC就是负责回收垃圾的，找到内存中的垃圾、并释放和回收空间。 在浏览器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://miaokeliq.github.io/img/post_img/121.jpg">
+<meta property="article:published_time" content="2023-03-12T09:27:22.000Z">
+<meta property="article:modified_time" content="2023-03-13T02:24:59.654Z">
+<meta property="article:author" content="缪克立">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="闲聊分享">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://miaokeliq.github.io/img/post_img/121.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://miaokeliq.github.io/2023/03/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"8OBGYTAHTZ","apiKey":"35c2ec32d8c274e643a0446e847e68fc","indexName":"immkl","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '垃圾回收与内存泄漏',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-13 10:24:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/universe.css"><style type="text/css">#toggle-sidebar {bottom: 80px}</style><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post_img/121.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">缪克立的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">垃圾回收与内存泄漏</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-12T09:27:22.000Z" title="发表于 2023-03-12 17:27:22">2023-03-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-13T02:24:59.654Z" title="更新于 2023-03-13 10:24:59">2023-03-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9D%A2%E8%AF%95/JavaScript%E9%AB%98%E7%BA%A7/">JavaScript高级</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="垃圾回收与内存泄漏"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><h2 id="内存生命周期"><a href="#内存生命周期" class="headerlink" title="内存生命周期"></a>内存生命周期</h2><ol>
+<li><strong>分配内存</strong>：当我们申请变量、函数、对象的时候，系统会自动为它们分配内存。</li>
+<li><strong>内存使用</strong>：即读写内存，也就是使用变量、函数等。</li>
+<li><strong>内存回收</strong>：使用完毕，由垃圾回收机制自动回收不再使用的内存。</li>
+</ol>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>GC</strong>是<strong>Garbage Collection</strong>，程序过程中会产生很多<em>垃圾</em>，这些垃圾是程序不再使用的内存或者一些不可达的对象，而<strong>GC</strong>就是负责<br>回收垃圾的，找到内存中的垃圾、并释放和回收空间。</p>
+<p>在浏览器的发展历史上，用到过两种主要的标记策略：<code>标记清理</code> 和 <code>引用计数</code>。</p>
+<h2 id="垃圾回收的方式"><a href="#垃圾回收的方式" class="headerlink" title="垃圾回收的方式"></a>垃圾回收的方式</h2><h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><ul>
+<li><p>引用计数的核心思想是每个值都被记录它被引用的次数。创建一个对象并将其赋值给变量 a，此时，该对象的引用计数为 1。</p>
+</li>
+<li><p>如果该对象又被赋值给变量 b，那么引用计数加 1 变为 2。如果保存对该对象引用的变量被其他对象给覆盖了，那么该对象引用计数减一。当一个对象<br>的引用数为 0 时，就说明该对象可以被垃圾回收器安全地清除，以释放其占用的内存。</p>
+</li>
+</ul>
+<p><strong>引用计数的优点</strong>:</p>
+<ol>
+<li><strong>可即刻回收垃圾</strong>, 当引用计数为 0 时，对象在变成垃圾的时候会立刻被回收。</li>
+<li>因为是及时回收，不需要专门的垃圾回收程序，避免了长时间的垃圾回收暂停，从而提高了程序的运行效率。</li>
+</ol>
+<p><strong>引用计数的缺点</strong>：</p>
+<ol>
+<li>时间开销大，因为引用计数算法需要维护引用数，一旦发现引用数发生改变需要立刻对引用数进行修改；</li>
+<li>无法解决循环引用问题。循环引用就是比如函数中声明了对象 a 和对象 b，对象 a 有一个指针指向对象 b，而对象 b 也引用了对象 a，这样的情况下它们的引用数都是 2，并且永远不会变成 0，<br>如果函数被多次调用，则会导致大量内存永远不会被释放,就产生了内存泄漏问题。手动解决办法就是把变量设置为 null，切换变量与引用之间的联系，<br>当下次垃圾回收程序运行时，这些垃圾就会被回收。</li>
+</ol>
+<h3 id="标记清理"><a href="#标记清理" class="headerlink" title="标记清理"></a>标记清理</h3><p>在代码执行阶段，为程序中所有变量添加上一个二进制字符，并初始值置为 0（默认全是垃圾）,然后遍历所有对象，被使用的变量标记设置为 1，在<br>程序运行结束时回收掉所有标记为 0 的变量，回收结束后再将现存变量再设置为 0，等待下一轮回收开启。</p>
+<p><strong>标记清理的优点</strong>：</p>
+<ol>
+<li>算法思路清晰，实现简单。</li>
+<li>避免了循环引用的问题。</li>
+</ol>
+<p><strong>标记清理的缺点</strong>：</p>
+<ol>
+<li>内存碎片化，造成空间浪费，并且新分配空间时导致分配时间过长。</li>
+<li>不会立即回收资源。</li>
+</ol>
+<h2 id="减少垃圾回收的方法"><a href="#减少垃圾回收的方法" class="headerlink" title="减少垃圾回收的方法"></a>减少垃圾回收的方法</h2><p>代码比较复杂时，垃圾回收所带来的代价比较大，所以应该尽量减少垃圾回收。</p>
+<ul>
+<li><strong>对数组进行优化</strong>：在清空一个数组时，将数组的长度设置为 0，以此来达到清空数组的目的。</li>
+<li><strong>对<code>Object</code>进行优化</strong>：对象尽量复用，对于不再使用的对象就设置为 null，尽快被回收。</li>
+<li><strong>对函数进行优化</strong>：在循环中的函数表达式，如果可以复用就尽量放在循环外面。</li>
+</ul>
+<h1 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h1><h2 id="什么是内存泄漏"><a href="#什么是内存泄漏" class="headerlink" title="什么是内存泄漏"></a>什么是内存泄漏</h2><p>简单来说就是不再用到的对象内存没有及时被垃圾回收机制回收时，就叫做<code>内存泄漏（Memory leak）</code></p>
+<h2 id="那些情况会导致内存泄漏"><a href="#那些情况会导致内存泄漏" class="headerlink" title="那些情况会导致内存泄漏"></a>那些情况会导致内存泄漏</h2><ol>
+<li>不正当的闭包，解决办法：在函数调用后，把外部的引用关系置空就行。</li>
+<li>隐式全局变量：函数中没有声明而直接使用的变量就会造成隐式全局变量，这种变量在函数执行结束后不会被回收，就会造成内存泄漏。结局办法：尽量通过 let，const 定义局部变量。</li>
+<li>定时器：<code>setInterval</code>没有结束前，回调函数里的变量以及回调函数本身都无法被回收。<code>setTimeout</code>也存在同样的问题。解决办法：当不需要定时器时，调用<code>clearInterval</code>和<code>clearTimeout</code>来清除。</li>
+<li>遗忘的事件监听器或监听者模式（eventBus）：比较说 vue，在组件中挂载了事件处理函数，在组件销毁时不主动将其清除，其中引用的变量不会进行回收，可能<br>引起内存占用过高，造成意外的内存泄漏。解决办法：在组件被销毁前的生命周期里清除即可，<code>removeEventListener</code>和<code>eventBus.off</code>。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">缪克立</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://miaokeliq.github.io/2023/03/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">http://miaokeliq.github.io/2023/03/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://miaokeliq.github.io" target="_blank">缪克立的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/%E9%97%B2%E8%81%8A%E5%88%86%E4%BA%AB/">闲聊分享</a><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a></div><div class="post_share"><div class="social-share" data-image="/img/post_img/121.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/25/JavaScript%E9%9B%B6%E7%A2%8E%E9%9D%A2%E8%AF%95%E9%A2%98/"><img class="prev-cover" src="/img/post_img/131.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript零碎面试题</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/12/%E9%97%AD%E5%8C%85%E3%80%81%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/"><img class="next-cover" src="/img/post_img/151.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">闭包、执行上下文、作用域</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/02/06/JavaScript%E9%9D%A2%E8%AF%95%E9%A2%98%E5%AD%A6%E4%B9%A0%E6%B1%87%E6%80%BB/" title="JavaScript面试题学习汇总"><img class="cover" src="/img/post_img/141.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-06</div><div class="title">JavaScript面试题学习汇总</div></div></a></div><div><a href="/2023/02/23/JavaScript%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81%E9%A2%98%E6%B1%87%E6%80%BB/" title="JavaScript手写代码题汇总"><img class="cover" src="/img/post_img/141.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-23</div><div class="title">JavaScript手写代码题汇总</div></div></a></div><div><a href="/2023/03/12/%E5%8E%9F%E5%9E%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="（一）原型、原型链"><img class="cover" src="/img/post_img/71.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-12</div><div class="title">（一）原型、原型链</div></div></a></div><div><a href="/2023/03/12/%E9%97%AD%E5%8C%85%E3%80%81%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="闭包、执行上下文、作用域"><img class="cover" src="/img/post_img/151.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-12</div><div class="title">闭包、执行上下文、作用域</div></div></a></div><div><a href="/2023/02/04/HTML%E9%9D%A2%E8%AF%95%E9%A2%98%E5%AD%A6%E4%B9%A0%E6%B1%87%E6%80%BB/" title="HTML面试题学习汇总"><img class="cover" src="/img/post_img/71.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-04</div><div class="title">HTML面试题学习汇总</div></div></a></div><div><a href="/2022/10/16/JavaScript%E4%B9%8B%E7%B1%BB%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E4%B8%8Earguments/" title="JavaScript之类数组对象与arguments"><img class="cover" src="/img/post_img/111.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-16</div><div class="title">JavaScript之类数组对象与arguments</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">缪克立</div><div class="author-info__description">苦尽甘来，该有的总会有的。</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/miaokeliq" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:miaokeliq@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的blog，博主VX(MklZjh1107)，欢迎老铁一起交流讨论。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.1.</span> <span class="toc-text">内存生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾回收的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">引用计数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E6%B8%85%E7%90%86"><span class="toc-number">1.3.2.</span> <span class="toc-text">标记清理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">减少垃圾回收的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">内存泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">什么是内存泄漏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%82%A3%E4%BA%9B%E6%83%85%E5%86%B5%E4%BC%9A%E5%AF%BC%E8%87%B4%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">那些情况会导致内存泄漏</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/26/rollup%E5%92%8Cwebpack/" title="rollup和webpack"><img src="/img/post_img/171.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rollup和webpack"/></a><div class="content"><a class="title" href="/2023/03/26/rollup%E5%92%8Cwebpack/" title="rollup和webpack">rollup和webpack</a><time datetime="2023-03-26T00:47:55.000Z" title="发表于 2023-03-26 08:47:55">2023-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/25/JavaScript%E9%9B%B6%E7%A2%8E%E9%9D%A2%E8%AF%95%E9%A2%98/" title="JavaScript零碎面试题"><img src="/img/post_img/131.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript零碎面试题"/></a><div class="content"><a class="title" href="/2023/03/25/JavaScript%E9%9B%B6%E7%A2%8E%E9%9D%A2%E8%AF%95%E9%A2%98/" title="JavaScript零碎面试题">JavaScript零碎面试题</a><time datetime="2023-03-25T06:35:24.000Z" title="发表于 2023-03-25 14:35:24">2023-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" title="垃圾回收与内存泄漏"><img src="/img/post_img/121.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="垃圾回收与内存泄漏"/></a><div class="content"><a class="title" href="/2023/03/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" title="垃圾回收与内存泄漏">垃圾回收与内存泄漏</a><time datetime="2023-03-12T09:27:22.000Z" title="发表于 2023-03-12 17:27:22">2023-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/12/%E9%97%AD%E5%8C%85%E3%80%81%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="闭包、执行上下文、作用域"><img src="/img/post_img/151.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="闭包、执行上下文、作用域"/></a><div class="content"><a class="title" href="/2023/03/12/%E9%97%AD%E5%8C%85%E3%80%81%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="闭包、执行上下文、作用域">闭包、执行上下文、作用域</a><time datetime="2023-03-12T08:19:13.000Z" title="发表于 2023-03-12 16:19:13">2023-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/12/%E5%8E%9F%E5%9E%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="（一）原型、原型链"><img src="/img/post_img/71.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="（一）原型、原型链"/></a><div class="content"><a class="title" href="/2023/03/12/%E5%8E%9F%E5%9E%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="（一）原型、原型链">（一）原型、原型链</a><time datetime="2023-03-12T06:53:58.000Z" title="发表于 2023-03-12 14:53:58">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/post_img/121.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By 缪克立</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><div class="aplayer no-destroy" data-id="720305850" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-lrctype="1" data-preload="none" data-autoplay="true" muted></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":20,"vOffset":-20},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
